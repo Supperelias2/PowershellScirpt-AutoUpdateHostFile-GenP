@@ -1,3 +1,5 @@
+# IN development branch for menu addition !!!
+
 # Automation Script for GenP
 
 This PowerShell script automates the process of updating your `hosts` file to block Adobe licensing validation servers. The script performs the following steps:

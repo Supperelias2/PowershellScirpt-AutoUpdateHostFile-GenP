@@ -27,7 +27,7 @@ function Check-HostFileWriteStatus {
     if (Test-Path -Path $hostFilePath -PathType Leaf) {
         $fileInfo = Get-Item $hostFilePath
         if ($fileInfo.IsReadOnly) {
-            Write-Host "The host file is read-only. You need to change permissions to write to it."
+            Write-Host "The host file is read-only. You need to change permissions to write to it." -ForegroundColor Red
         } else {
             Write-Host "The host file is writable." -ForegroundColor Green
         }
@@ -40,23 +40,13 @@ function Check-HostFileWriteStatus {
 }
 
 function Backup-CurrentHostFile {
-    Write-Host "Backing up current host file..."
-    $hostFilePath = "C:\Windows\System32\drivers\etc\hosts"
-    $backupFilePath = "C:\Windows\System32\drivers\etc\hosts.bak"
-    
-    if (Test-Path -Path $hostFilePath -PathType Leaf) {
-        Copy-Item -Path $hostFilePath -Destination $backupFilePath -Force
-        Write-Host "Backup completed. Backup saved as hosts.bak."
-    } else {
-        Write-Host "Host file not found. Backup not created."
-    }
-    Write-Host ""
+    write-host "menu not ready"
     Pause
     Show-Menu
 }
 
 function Update-HostFile {
-
+    write-host "menu not ready"
     Pause
     Show-Menu
 }
