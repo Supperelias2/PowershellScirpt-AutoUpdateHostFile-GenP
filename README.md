@@ -8,4 +8,4 @@ This PowerShell script automates the process of updating your `hosts` file to bl
 
 **Important:** Ensure that your user account has Modify access to the `hosts` file in Windows to allow the script to make the necessary changes.
 
-For more information on GenP, check out [/r/GenP](https://www.reddit.com/r/GenP).
+For more information on GenP, check out the wiki & guides @ [/r/GenP](https://www.reddit.com/r/GenP).

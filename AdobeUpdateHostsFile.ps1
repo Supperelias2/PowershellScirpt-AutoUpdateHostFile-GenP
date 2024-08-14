@@ -63,7 +63,7 @@ function Update-HostsFile {
             Write-Error "An error occurred: $_"
         }
     } else {
-        Write-Error "The hosts file is not writable by the current user."
+        Write-Error "The hosts file is not writable by the current user. please make sure the user that currently runs the script has write access to the hosts file"
     }
 }
 
