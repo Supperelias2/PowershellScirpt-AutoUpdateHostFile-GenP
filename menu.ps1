@@ -4,7 +4,7 @@ function Show-Menu {
     Write-Host "1. Check host file write status"
     Write-Host "2. Backup Current hostfile to c:\Temp\hosts.bak"
     Write-Host "3. Update and overwrite host file with new GenP entries"
-    Write-Host "4. Exit script"
+    Write-Host "4. Exit script" 
     Write-Host ""
     $choice = Read-Host "Enter a menu option (1-4)"
 
@@ -14,7 +14,7 @@ function Show-Menu {
         3 { Update-HostFile }
         4 { Exit-Script }
         Default { 
-            Write-Host "Invalid option. Please try again." 
+            Write-Host "Invalid option. Please try again." -ForegroundColor Red
             Show-Menu
         }
     }
@@ -29,11 +29,12 @@ function Check-HostFileWriteStatus {
         if ($fileInfo.IsReadOnly) {
             Write-Host "The host file is read-only. You need to change permissions to write to it."
         } else {
-            Write-Host "The host file is writable."
+            Write-Host "The host file is writable." -ForegroundColor Green
         }
     } else {
-        Write-Host "Host file not found."
+        Write-Host "Host file not found." -ForegroundColor Red
     }
+    Write-Host ""
     Pause
     Show-Menu
 }
@@ -49,33 +50,19 @@ function Backup-CurrentHostFile {
     } else {
         Write-Host "Host file not found. Backup not created."
     }
+    Write-Host ""
     Pause
     Show-Menu
 }
 
 function Update-HostFile {
-    Write-Host "Updating and overwriting host file with new GenP entries..."
-    $hostFilePath = "C:\Windows\System32\drivers\etc\hosts"
-    
-    # Voeg hier de regels toe die je aan het hostbestand wilt toevoegen
-    $genpEntries = @(
-        "127.0.0.1 activation.adobe.com",
-        "127.0.0.1 practivate.adobe.com",
-        "127.0.0.1 lmlicenses.wip4.adobe.com",
-        "127.0.0.1 lm.licenses.adobe.com"
-    )
-    
-    # Voeg de regels toe aan het hostbestand
-    foreach ($entry in $genpEntries) {
-        Add-Content -Path $hostFilePath -Value $entry
-    }
-    
-    Write-Host "Host file successfully updated with new GenP entries."
+
     Pause
     Show-Menu
 }
 
 function Exit-Script {
+    write-host ""
     Write-Host "Exiting script."
     Exit
 }
