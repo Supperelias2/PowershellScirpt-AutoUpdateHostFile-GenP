@@ -10,7 +10,8 @@ function Show-Menu {22
     Write-Host "1. Check host file write status"
     Write-Host "2. Backup Current hostfile in c:\Temp\hostsbackup\"
     Write-Host "3. Update and overwrite host file with new GenP entries"
-    Write-Host "4. Exit script" 
+    Write-Host ""
+    Write-Host "0. Exit script" 
     Write-Host ""
     $choice = Read-Host "Enter a menu option (1-4)"
 
@@ -18,7 +19,7 @@ function Show-Menu {22
         1 { Check-HostFileWriteStatus }
         2 { Backup-CurrentHostFile }
         3 { Update-HostFile }
-        4 { Exit-Script }
+        0 { Exit-Script }
         Default { 
             Clear-host
             Write-Host "Invalid option. Please try again." -ForegroundColor Red
@@ -75,8 +76,26 @@ function Backup-CurrentHostFile {
 
 
 function Update-HostFile {
-    write-host "menu not ready"
-    Pause
+    clear-host
+    # Check if the hosts file is writable
+    if ((Get-Item $hostsPath).IsReadOnly -eq $false) {
+        try {
+            # Download content from the specified URL
+            $content = Invoke-WebRequest -Uri $url -UseBasicParsing
+            if ($content.StatusCode -eq 200) {
+                # Overwrite the hosts file with the downloaded content
+                $content.Content | Out-File -FilePath $hostsPath -Encoding ASCII
+                Write-Host "The hosts file has been successfully overwritten." -ForegroundColor Green
+            } else {
+                Write-Host "Failed to download content. Status Code: $($content.StatusCode)" -ForegroundColor Red
+            }
+        } catch {
+            Write-Host "An error occurred: $_" -ForegroundColor Red
+        }
+    } else {
+        Write-Host "The hosts file is not writable by the current user. Please make sure the user that currently runs the script has write access to the hosts file." -ForegroundColor Red
+    }
+    Read-Host "Press Enter to return to the menu"
     Show-Menu
 }
 
