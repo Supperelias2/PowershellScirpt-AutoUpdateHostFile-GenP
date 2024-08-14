@@ -1,8 +1,14 @@
-function Show-Menu {
+# Define variables for easy configuration
+$hostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
+$backupPath = "C:\Temp\hostsbackup\"
+$url = "https://a.dove.isdumb.one/list.txt"
+
+function Show-Menu {22
     Clear-Host
     Write-Host "Select an option:"
+    Write-host ""
     Write-Host "1. Check host file write status"
-    Write-Host "2. Backup Current hostfile to c:\Temp\hosts.bak"
+    Write-Host "2. Backup Current hostfile in c:\Temp\hostsbackup\"
     Write-Host "3. Update and overwrite host file with new GenP entries"
     Write-Host "4. Exit script" 
     Write-Host ""
@@ -14,7 +20,9 @@ function Show-Menu {
         3 { Update-HostFile }
         4 { Exit-Script }
         Default { 
+            Clear-host
             Write-Host "Invalid option. Please try again." -ForegroundColor Red
+            Pause
             Show-Menu
         }
     }
@@ -40,10 +48,31 @@ function Check-HostFileWriteStatus {
 }
 
 function Backup-CurrentHostFile {
-    write-host "menu not ready"
+    Clear-host
+    try {
+        # Ensure the backup directory exists
+        $backupDir = [System.IO.Path]::GetDirectoryName($backupPath)
+        if (-not (Test-Path -Path $backupDir)) {
+            New-Item -Path $backupDir -ItemType Directory -Force | Out-Null
+        }
+
+        # Create a timestamped backup file name without extension
+        $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+        $backupFileName = "Hosts-$timestamp"
+        $backupFullPath = Join-Path -Path $backupDir -ChildPath $backupFileName
+
+        # Copy the hosts file to the backup location
+        Copy-Item -Path $hostsPath -Destination $backupFullPath -Force
+        Write-Host "Backup of the hosts file created at $backupFullPath." -ForegroundColor Green
+    } catch {
+        Write-Host "Failed to create a backup of the hosts file: $_" -ForegroundColor Red
+        Read-Host "Press any key to return to the menu"
+    }
+
     Pause
     Show-Menu
 }
+
 
 function Update-HostFile {
     write-host "menu not ready"

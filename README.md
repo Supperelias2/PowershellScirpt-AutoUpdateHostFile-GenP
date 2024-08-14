@@ -1,4 +1,4 @@
-# IN development branch for menu addition !!!
+# IN development branch for menu addition
 
 # Automation Script for GenP
 
