@@ -1,6 +1,7 @@
-Automation Script for GenP
+# Automation Script for GenP
 
-This Powershell script downloads the latest entries needed to block the Adobe licensing validation servers and automatticly OVERWRITES your own Hosts file.
-Make sure your user has Modify access to the hosts file in windows.
+This PowerShell script downloads the latest entries needed to block the Adobe licensing validation servers and automatically **overwrites** your own `hosts` file.
 
-For more information on GenP check out /r/GenP
+**Important:** Make sure your user has Modify access to the `hosts` file in Windows.
+
+For more information on GenP, check out [/r/GenP](https://www.reddit.com/r/GenP).
