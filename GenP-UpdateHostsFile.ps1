@@ -35,6 +35,7 @@ function Backup-HostsFile {
         Write-Output "Backup of the hosts file created at $backupPath."
     } catch {
         Write-Error "Failed to create a backup of the hosts file: $_"
+        Read-Host "Press any key to end the script"
     }
 }
 
@@ -56,14 +57,18 @@ function Update-HostsFile {
                 # Overwrite the hosts file with the downloaded content
                 $content.Content | Out-File -FilePath $hostsPath -Encoding ASCII
                 Write-Output "The hosts file has been successfully overwritten."
+                Read-Host "Press Enter to end the script"
             } else {
                 Write-Error "Failed to download content. Status Code: $($content.StatusCode)"
+                Read-Host "Press Enter to end the script"
             }
         } catch {
             Write-Error "An error occurred: $_"
+            Read-Host "Press Enter to end the script"
         }
     } else {
         Write-Error "The hosts file is not writable by the current user. please make sure the user that currently runs the script has write access to the hosts file"
+        Read-Host "Press Enter to end the script"
     }
 }
 
