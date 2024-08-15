@@ -25,7 +25,7 @@ function Show-Menu {22
     Write-Host ""
     Write-Host "0. Exit script" 
     Write-Host ""
-    $choice = Read-Host "Enter a menu option (1-4)"
+    $choice = Read-Host "Enter a menu option (0-3)"
 
     switch ($choice) {
         1 { Check-HostFileWriteStatus }
