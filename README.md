@@ -17,6 +17,7 @@ This PowerShell script automates the process of updating your `hosts` file to bl
 ### Variables
 
 The script uses the following variables for easy configuration:
+The script also contains logging
 
 - **`$hostsPath`**: The path to your `hosts` file. Typically, this is `C:\Windows\System32\drivers\etc\hosts`.
 - **`$backupPath`**: The directory where backups of the `hosts` file will be stored.

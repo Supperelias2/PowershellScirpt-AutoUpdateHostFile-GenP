@@ -3,6 +3,7 @@ $hostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
 $scriptPath = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 $backupPath = "$scriptpath\HostfileBackup\"
+
 $logpath = "$scriptpath\LOGS\"
 $url = "https://a.dove.isdumb.one/list.txt"
 
