@@ -123,13 +123,15 @@ function Test-HostFileWriteStatus {
     Show-Menu
 }
 
-
 function Backup-CurrentHostFile {
     Clear-host
+    LogMessage "Starting backup of the current hosts file."
+
     try {
         # Ensure the backup directory exists
         $backupDir = [System.IO.Path]::GetDirectoryName($backupPath)
         if (-not (Test-Path -Path $backupDir)) {
+            LogMessage "Backup directory does not exist. Creating directory at path: $backupDir"
             New-Item -Path $backupDir -ItemType Directory -Force | Out-Null
         }
 
@@ -141,35 +143,53 @@ function Backup-CurrentHostFile {
         # Copy the hosts file to the backup location
         Copy-Item -Path $hostsPath -Destination $backupFullPath -Force
         Write-Host "Backup of the hosts file created at $backupFullPath." -ForegroundColor Green
+        LogMessage "Backup successfully created at $backupFullPath."
     } catch {
         Write-Host "Failed to create a backup of the hosts file: $_" -ForegroundColor Red
+        LogMessage "Failed to create a backup of the hosts file: $_"
         Read-Host "Press any key to return to the menu"
     }
 
+    LogMessage "Completed backup of the current hosts file."
     Pause
     Show-Menu
 }
 
+
 function Update-HostFile {
-    clear-host
+    Clear-Host
+    LogMessage "Starting the update of the hosts file."
+
     # Check if the hosts file is writable
     if ((Get-Item $hostsPath).IsReadOnly -eq $false) {
+        LogMessage "The hosts file is writable."
+
         try {
             # Download content from the specified URL
+            LogMessage "Attempting to download content from $url."
             $content = Invoke-WebRequest -Uri $url -UseBasicParsing
+
             if ($content.StatusCode -eq 200) {
+                LogMessage "Content successfully downloaded from $url. Status Code: $($content.StatusCode)"
+                
                 # Overwrite the hosts file with the downloaded content
                 $content.Content | Out-File -FilePath $hostsPath -Encoding ASCII
                 Write-Host "The hosts file has been successfully overwritten." -ForegroundColor Green
+                LogMessage "The hosts file has been successfully overwritten."
             } else {
                 Write-Host "Failed to download content. Status Code: $($content.StatusCode)" -ForegroundColor Red
+                LogMessage "Failed to download content from $url. Status Code: $($content.StatusCode)"
             }
         } catch {
             Write-Host "An error occurred: $_" -ForegroundColor Red
+            LogMessage "An error occurred while trying to update the hosts file: $_"
         }
     } else {
         Write-Host "The hosts file is not writable by the current user. Please make sure the user that currently runs the script has write access to the hosts file." -ForegroundColor Red
+        LogMessage "The hosts file is not writable by the current user."
     }
+
+    LogMessage "Completed the update of the hosts file."
     Read-Host "Press Enter to return to the menu"
     Show-Menu
 }
@@ -177,6 +197,7 @@ function Update-HostFile {
 function Exit-Script {
     write-host ""
     Write-Host "Exiting script."
+    LogMessage "exiting script"
     Exit
 }
 
