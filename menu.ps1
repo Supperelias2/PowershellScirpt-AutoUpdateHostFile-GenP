@@ -4,12 +4,12 @@ $backupPath = "C:\Temp\hostsbackup\"
 $url = "https://a.dove.isdumb.one/list.txt"
 
 function Check-AdministratorRights {
-    # Controleer of het script als administrator wordt uitgevoerd
+    # check if the script is run as admin
     if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-        # Het script wordt niet als administrator uitgevoerd, dus start het opnieuw met verhoogde rechten
+        # the script is not run as admin
         Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
 
-        # Stop het huidige script
+        # Stop the current script
         Exit
     }
 }
