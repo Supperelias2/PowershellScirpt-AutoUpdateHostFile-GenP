@@ -3,7 +3,7 @@ $hostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
 $backupPath = "C:\Temp\hostsbackup\"
 $url = "https://a.dove.isdumb.one/list.txt"
 
-function Check-AdministratorRights {
+function Test-AdministratorRight {
     # check if the script is run as admin
     if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
         # the script is not run as admin
@@ -13,7 +13,6 @@ function Check-AdministratorRights {
         Exit
     }
 }
-
 
 function Show-Menu {22
     Clear-Host
@@ -28,7 +27,7 @@ function Show-Menu {22
     $choice = Read-Host "Enter a menu option (0-3)"
 
     switch ($choice) {
-        1 { Check-HostFileWriteStatus }
+        1 { Test-HostFileWriteStatus }
         2 { Backup-CurrentHostFile }
         3 { Update-HostFile }
         0 { Exit-Script }
@@ -41,7 +40,7 @@ function Show-Menu {22
     }
 }
 
-function Check-HostFileWriteStatus {
+function Test-HostFileWriteStatus {
     clear-host
     Write-Host "Checking host file write status..."
     $hostFilePath = "C:\Windows\System32\drivers\etc\hosts"
@@ -86,7 +85,6 @@ function Backup-CurrentHostFile {
     Show-Menu
 }
 
-
 function Update-HostFile {
     clear-host
     # Check if the hosts file is writable
@@ -118,6 +116,6 @@ function Exit-Script {
 }
 
 # start van het script
-Check-AdministratorRights
+Test-AdministratorRight
 # Start het menu
 Show-Menu
