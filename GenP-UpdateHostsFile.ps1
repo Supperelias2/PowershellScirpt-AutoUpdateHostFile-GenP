@@ -1,6 +1,8 @@
 # Define variables for easy configuration
 $hostsPath = "$env:SystemRoot\System32\drivers\etc\hosts"
-$backupPath = "C:\Temp\hostsbackup\"
+$scriptPath = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
+$backupPath = "$scriptpath\HostfileBackup\"
+$logpath = "$scriptpath\LOGS\"
 $url = "https://a.dove.isdumb.one/list.txt"
 
 function Test-AdministratorRight {
